@@ -1,40 +1,15 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux';
-import thunk from 'redux-thunk';
+import { createStore, applyMiddleware, compose } from 'redux';
 import { logger } from 'redux-logger'
+import { createClient } from 'redux-socket.io-connect';
+import io from 'socket.io-client';
 
-import { stockReducer } from './reducer';
+import { reducer } from './reducer';
 
-const initState = {
-    connected: false,
-    companies: ['fb', 'msft', 'aapl'],
-    data: [
-        {
-            symbol: 'fb',
-            price: '123.45',
-            size: '500'
-        },
-        {
-            symbol: 'aapl',
-            price: '341.45',
-            size: '100'
-        },
-        {
-            symbol: 'msft',
-            price: '10.45',
-            size: '250'
-        }
-    ]
-}
 
-const rootReducer = combineReducers({
-    stock: stockReducer
-});
+const socket = io('http://localhost:4210');
+const client = createClient(socket);
 
-export const store = createStore(
-    rootReducer,
-    {stock: initState},
-    applyMiddleware(thunk, logger)
-);
+export const store = createStore(reducer,compose(client, applyMiddleware(logger)));
 
 
 

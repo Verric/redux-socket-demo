@@ -1,28 +1,38 @@
 import express from 'express';
-import axios from 'axios';
+import http from 'http';
+import io from 'socket.io';
+import { createServer, createHandler, combineHandlers } from 'redux-socket.io-connect';
+import Faker from 'faker';
 
 const app = express();
-const companies = ['aapl', 'fb', 'msft', 'tsla'];
-const baseUrl = 'https://api.iextrading.com/1.0';
-let data = {}
+const server = http.createServer(app);
+const socket = io(server);
+server.listen(4210);
 
-const quoteEndpoint = (symbol) => `/stock/${symbol}/quote`;
+let timerId;
 
+const startRequestHandler = createHandler({
+  START_STREAM: (context, action) => {
 
+    context.dispatch({ type: 'CONNECT' })
 
-const id = setInterval(function() {
-  companies.forEach((company) =>axios.get(`${baseUrl}${quoteEndpoint(company)}`).then(response=> {
-    console.log(response.data);
-    Object.assign({}, data, response.data.companyName, response.data.latestPrice);
-  }));
-}, 20000)
-
-app.get('/', function (req, res) {
-  res.send(data)
+    timerId = setInterval(() => context.dispatch({
+      type: 'DATA',
+      message: Faker.fake("{{name.firstName}} {{name.lastName}} of {{company.companyName}}: {{address.country}}")
+    }), 1000);
+  }
 });
 
-
-app.listen(3000, function () {
-  console.log('Example app listening on port 3000!')
+const stopRequestHandler = createHandler({
+  STOP_STREAM: (context, action) => {
+    clearInterval(timerId);
+    context.dispatch({
+      type: 'DISCONNECT'
+    })
+  }
 });
+
+const handlers = combineHandlers({ startRequestHandler, stopRequestHandler });
+
+createServer(socket, handlers);
 

@@ -1,35 +1,32 @@
-let initialState = {
+const initialState = {
     connected: false,
-    companies: [],
-    data: []
+    messages: []
 };
 
-export const stockReducer = (state = initialState, action) => {
+export const reducer = (state = initialState, action) => {
 
     switch (action.type) {
 
+        case 'DATA':
+            return {
+                ...state,
+                messages: [...state.messages, action.message]
+            };
+
         case 'CONNECT':
-            return Object.assign({}, state, { connected: true });
+            return {
+                ...state, connected: true
+            };
 
         case 'DISCONNECT':
-            return Object.assign({}, state, { connected: false });
-
-        case 'RECEIVE_DATA':
             return {
-                ...state, data: [...state.data, action.data]
+                ...state, connected: false
             };
 
-        case 'ADD_COMPANY':
+        case 'CLEAR_DATA':
             return {
                 ...state,
-                companies: [...state.companies, action.company]
-            };
-
-        case 'REMOVE_COMPANY':
-        console.log(action)
-            return {
-                ...state,
-                companies: state.companies.filter(company => company !== action.company)
+                messages: []
             };
 
         default:

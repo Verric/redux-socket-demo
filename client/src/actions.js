@@ -1,47 +1,23 @@
-
-
-// ------------------ CONNECTION ------------------------
-
-
-export const connectToIex = () => {
-    return (dispatch) => dispatch({ type: 'CONNECT' })
-}
-
-export const disconnectFromIex = () => {
-    return (dispatch) => dispatch({ type: 'DISCONNECT' });
-}
-
-// ------------------------------------------------------
-
-const receiveData = (data) => {
+export const startData = () => {
     return {
-        type: 'RECEIVE_DATA',
-        data
+        type: 'START_STREAM',
+        meta: {
+            emit: true
+        }
     };
 }
 
-export const receivedData = (data) => {
-    return (dispatch) => dispatch(receiveData(JSON.parse(data)));
+export const stopData = () => {
+    return {
+        type: 'STOP_STREAM',
+        meta: {
+            emit: true
+        }
+    };
 }
 
-
-
-// ------------------ ADD / REMOVE ----------------------
-
-
-export const addCompany = (company) => {
-    return (dispatch) => dispatch({
-        type: 'ADD_COMPANY',
-        company
-    });
+export const clearData = () => {
+    return {
+        type: 'CLEAR_DATA'
+    }
 }
-
-
-export const removeCompany = (company) => {
-    return (dispatch) => dispatch({
-        type: 'REMOVE_COMPANY',
-        company
-    });
-}
-
-// ------------------------------------------------------
