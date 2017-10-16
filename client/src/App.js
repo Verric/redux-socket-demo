@@ -27,7 +27,6 @@ const App = ({ startData, stopData, messages, connected, clearData }) => (
 );
 
 const mapStateToProps = (state) => {
-  console.log(state.connected)
   return {
     messages: state.messages,
     connected: state.connected
