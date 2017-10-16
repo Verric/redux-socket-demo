@@ -8,9 +8,9 @@ const App = ({ startData, stopData, messages, connected, clearData }) => (
   <Container >
 
     <ButtonGroup>
-      <Button color="primary" onClick={() => startData()}>Start</Button>
-      <Button color="secondary" onClick={() => stopData()}>Stop</Button>
-      <Button color="danger" onClick={() => clearData()}>Clear</Button>
+      <Button style={{backgroundColor: '#4FC1E9'}} onClick={() => startData()}>Start</Button>
+      <Button style={{backgroundColor: '#FFCE54'}} onClick={() => stopData()}>Stop</Button>
+      <Button style={{backgroundColor: '#FC6E51'}} onClick={() => clearData()}>Clear</Button>
     </ButtonGroup>
 
     <Alert color={connected ? 'success' : 'danger'}>
