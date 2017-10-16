@@ -1,10 +1,14 @@
 import express from 'express';
 import http from 'http';
 import io from 'socket.io';
+import cors from 'cors';
 import { createServer, createHandler, combineHandlers } from 'redux-socket.io-connect';
 import Faker from 'faker';
 
 const app = express();
+app.use(cors());
+app.options('*', cors())
+
 const server = http.createServer(app);
 const socket = io(server);
 server.listen(4210);
