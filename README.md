@@ -45,7 +45,7 @@ npm run start / yarn start
 ```
 
 ### TODO: 
-- Add cors (on send and pre-flight) :airplane:
+- ~~Add cors (on send and pre-flight) :airplane:~~
 - maybe add some tests :thinking:
 - branch and test [redux-socket.io](https://github.com/itaylor/redux-socket.io)
 - see if its worth building custom middleware
