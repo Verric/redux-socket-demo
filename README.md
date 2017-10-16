@@ -3,6 +3,7 @@
 A basic client-server app, used to test various redux-socket-io middle wares.
 
 ~~[redux-socket.io-connect](https://github.com/michaelmitchell/redux-socket.io-connect)~~ 
+
 [redux-socket.io](https://github.com/itaylor/redux-socket.io)
 
 
